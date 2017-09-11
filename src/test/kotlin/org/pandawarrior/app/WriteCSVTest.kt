@@ -32,7 +32,7 @@ import org.junit.jupiter.api.Test
  */
 class WriteCSVTest {
 
-    @Test
+//    @Test
     @DisplayName("run read XML Folders")
     fun readXmlFolder() {
         val list = getHeadersFromDirectory()
@@ -40,21 +40,21 @@ class WriteCSVTest {
         databaseToCSV(list, ".", "strings.csv", arrayOf("name", "translatable"), "translation")
     }
 
-    @Test
+//    @Test
     fun writeArrayCSV() {
         val list = getHeadersFromDirectory()
         arrayXmlToDatabase(".", list)
         databaseToCSV(list, ".", "build/try-arrays.csv", arrayOf("name"), "arrays_translation")
     }
 
-    @Test
+//    @Test
     fun writePluralsCSV() {
         val list = getHeadersFromDirectory()
         pluralXmlToDatabase(".", list)
         databaseToCSV(list, ".", "build/try-plurals.csv", arrayOf("name"), "plurals_translation")
     }
 
-    @Test
+//    @Test
     fun writeCSVProcess(){
         processXMLToCSV("./src/test/resources/test/xml", "./src/test/resources/result/csv", TranslationType.NORMAL)
         processXMLToCSV("./src/test/resources/test/xml", "./src/test/resources/result/csv", TranslationType.ARRAYS)

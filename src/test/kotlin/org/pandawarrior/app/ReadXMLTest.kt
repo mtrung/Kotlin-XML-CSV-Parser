@@ -49,7 +49,6 @@ class ReadXMLTest {
     @DisplayName("Test AString is working as expected in Kotlin")
     inner class testAString {
 
-        @Test
         @DisplayName("Initialize!")
         fun getAString() {
             val aString:AString = AString()
@@ -64,7 +63,6 @@ class ReadXMLTest {
     @Nested
     @DisplayName("Test Read String XML Functionality")
     inner class testReadStringXML {
-        @Test
         @DisplayName("Parse from XML String")
         fun parseXml(){
             val jaxbContext = JAXBContext.newInstance(AString::class.java)
@@ -79,7 +77,6 @@ class ReadXMLTest {
     @Nested
     @DisplayName("Test Read Resource XML Functionality")
     inner class testReadResourcesXML {
-        @Test
         @DisplayName("Parse from XML String")
         fun parseXml(){
             val jaxbContext = JAXBContext.newInstance(AStringResource::class.java)

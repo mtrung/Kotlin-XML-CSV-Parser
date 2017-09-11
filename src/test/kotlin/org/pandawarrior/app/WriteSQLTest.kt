@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test
  * Created by jtlie on 3/15/2017.
  */
 class WriteSQLTest {
-    @Test
+//    @Test
     fun writeFromXML() {
 
     }

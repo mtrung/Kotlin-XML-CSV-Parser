@@ -51,7 +51,7 @@ class ReadCSVTest {
     @Nested
     @DisplayName("test a string resources")
     inner class StringTest {
-        @Test
+//        @Test
         fun readCSV() {
             val format = CSVFormat.DEFAULT.withHeader().withHeader()
             val reader = StringReader(CSV)
@@ -75,7 +75,7 @@ class ReadCSVTest {
             //csvInputList.forEach(System.out::println)
         }
 
-        @Test
+//        @Test
         @DisplayName("Write into SQLite database")
         fun writeToSQL() {
             val format = CSVFormat.newFormat(',').withHeader()
@@ -105,7 +105,7 @@ class ReadCSVTest {
     @Nested
     @DisplayName("test a plural resources")
     inner class PluralTest {
-        @Test
+//        @Test
         fun readCSV() {
             val format = CSVFormat.DEFAULT.withHeader().withHeader()
             val reader = StringReader(PLURAL)
@@ -129,7 +129,7 @@ class ReadCSVTest {
             // csvInputList.forEach(System.out::println)
         }
 
-        @Test
+//        @Test
         @DisplayName("Write into SQLite database")
         fun writeToSQL() {
             val format = CSVFormat.newFormat(',').withHeader()

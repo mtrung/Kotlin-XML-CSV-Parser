@@ -48,7 +48,7 @@ class WriteXMLTest {
     @Nested
     @DisplayName("Test Write String XML Functionality")
     inner class testWriteStringXML {
-        @Test
+//        @Test
         @DisplayName("Parse to XML String")
         fun simpleParseXML1() {
             val aString = AString()
@@ -61,7 +61,7 @@ class WriteXMLTest {
             assertEquals(XML_STRING_SAMPLE, writer.toString())
         }
 
-        @Test
+//        @Test
         @DisplayName("Parse to XML String")
         fun simpleParseXML2() {
             val dogString = AString()
@@ -83,7 +83,7 @@ class WriteXMLTest {
             assertEquals(XML_RESOURCES_SAMPLE.replace("\n", "").trim(), writer.toString())
         }
 
-        @Test
+//        @Test
         fun writeFile() {
             val headers = stringCsvToDatabase("./src/test/resources/test/csv/test.csv")
             if (headers == null) {
@@ -96,7 +96,7 @@ class WriteXMLTest {
     @Nested
     @DisplayName("Test Write Plural XML Functionality")
     inner class testWritePluralXMLFile {
-        @Test
+//        @Test
         fun writeFile() {
             val headers = pluralsCsvToDatabase("./src/test/resources/test/csv/test-plural.csv")
             if (headers == null) {
@@ -109,7 +109,7 @@ class WriteXMLTest {
     @Nested
     @DisplayName("Test Write Arrays XML Functionality")
     inner class testWriteArraysXMLFile {
-        @Test
+//        @Test
         fun writeFile() {
             try {
                 val headers = arraysCsvToDatabase("./src/test/resources/test/csv/test-array.csv")
@@ -122,7 +122,7 @@ class WriteXMLTest {
             }
         }
 
-        @Test
+//        @Test
         fun writeXMLProcess(){
             processCSVToXML("./src/test/resources/test/csv/test.csv", "./src/test/resources/result/xml", TranslationType.NORMAL)
             processCSVToXML("./src/test/resources/test/csv/test-plural.csv", "./src/test/resources/result/xml", TranslationType.PLURALS)
