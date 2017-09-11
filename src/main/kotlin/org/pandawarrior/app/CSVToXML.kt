@@ -87,6 +87,8 @@ fun csvToDatabase(path: String, dbName: String, tableName: String, isString: Boo
                 }
                 stmt.executeUpdate()
             }
+
+            println("# "+csvParser.recordNumber + " - " +csvParser.currentLineNumber)
         }
     } catch (e: ArrayIndexOutOfBoundsException) {
         throw InvalidSourceException("Invalid CSV format, check if there are any incomplete data.")
@@ -99,37 +101,52 @@ fun csvToDatabase(path: String, dbName: String, tableName: String, isString: Boo
 }
 
 fun checkHeader(headerList: List<String>, isString: Boolean = true): Boolean {
-    if (headerList.get(0) == "name" &&
-            (isString && headerList.get(1) == "translatable" || !isString)) {
-        for (header in headerList.subList(2, headerList.toList().lastIndex + 1)) {
-            if (!header.contains("values")) {
-                throw Exception("Wrong format: does not contain value-* (example: value, value-zh-CN) column")
-            }
-        }
-        return true
-    } else {
-        throw Exception("Wrong format: does not contain name or translatable columns")
+
+    val firstCol = headerList.get(0)
+    if (firstCol != "name" && firstCol != "key" && firstCol != "resid") {
+        throw Exception("Wrong format: "+ firstCol +" does not contain name")
+        return false
     }
-    return false
+
+    val fromCol = if (headerList.get(1) == "translatable") 2 else 1
+    val translatedValuesHeaderList = headerList.subList(fromCol, headerList.toList().lastIndex + 1)
+
+    for (header in translatedValuesHeaderList) {
+        if (!header.contains("values")) {
+            throw Exception("Wrong format: does not contain value-* (example: value, value-zh-CN) column")
+        }
+    }
+    return true
 }
 
 fun databaseToStringXML(headerList: List<String>, writePath: String) {
     val tableName = "translation"
     val dbName = "xml_translation"
     lock(dbName, tableName) { statement, connection ->
+
+        println("- " + (headerList.count()-2) + " languages")
+        val spotCheckTranslatedCol = headerList.get(4)
+
         for (header in headerList) {
             val head = header.replace('-', '_')
             val cursor = statement.executeQuery("select name, translatable, `${head}` from $tableName")
-            println("select name, ${head} from $tableName")
+            println("- select name, ${head} from $tableName")
+
             val resources = AStringResource()
             val stringList = ArrayList<AString>()
             while (cursor.next()) {
                 val text = cursor.getString(cursor.findColumn(head))
-                val name = cursor.getString(cursor.findColumn("name"))
-                val translatable = cursor.getString(cursor.findColumn("translatable"))
+                val nameRaw = cursor.getString(cursor.findColumn("name"))
+                val name = if (nameRaw.isNullOrBlank()) "text_key" else nameRaw
+
+                val translatableRaw = cursor.getString(cursor.findColumn("translatable"))
+                // default to translatable=true
+                val translatable = if (translatableRaw.isNullOrBlank()) "true" else translatableRaw.toLowerCase()
+
                 val textString = AString()
                 textString.name = name
                 textString.text = text
+
                 if (translatable == "false") {
                     textString.translatable = translatable
                 }
